@@ -1,0 +1,139 @@
+﻿.strat-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.strat-block {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.strat-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.strat-block-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.strat-remove-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  font-size: 0.7rem;
+  line-height: 1;
+  transition: all var(--transition-fast);
+}
+
+.strat-remove-btn:hover {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.strat-chitbl {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 44px;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.strat-chitbl-corner {}
+
+.strat-chitbl-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: var(--space-1);
+}
+
+.strat-chitbl-rowlbl {
+  display: flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding-left: var(--space-1);
+}
+
+.strat-chitbl-cell {
+  width: 100%;
+  padding: var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-align: center;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.strat-chitbl-cell:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus);
+}
+
+.strat-chitbl-total {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: var(--space-1);
+}
+
+.strat-chitbl-grand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-surface-3);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1);
+}
+
+.strat-add-btn {
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.strat-add-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+}
