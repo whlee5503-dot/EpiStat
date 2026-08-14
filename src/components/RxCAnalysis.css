@@ -1,0 +1,56 @@
+﻿/*
+ * RxCAnalysis.css
+ *
+ * Most layout classes (.strat-calc, .strat-stats-grid, .strat-stat-card,
+ * .strat-chart-card, .strat-table, .strat-interp-card, .formula-box, etc.)
+ * are shared with StratifiedAnalysis.css and are NOT redefined here to
+ * avoid drift between modules. This file only adds classes new to RxC.
+ *
+ * NOTE: unlike StratifiedAnalysis, RxC does NOT use .strat-layout (the
+ * fixed 380px sidebar). RxC tables can grow to more columns than a 2x2
+ * table, so the input is full-width on top (.rxc-top) with results
+ * stacked below (.rxc-results) instead of squeezed into a sidebar.
+ */
+
+.rxc-top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.rxc-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.rxc-warning-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: var(--bg-surface);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+}
+
+.rxc-warning-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-danger) 15%, transparent);
+  color: var(--color-danger);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.rxc-warning-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}

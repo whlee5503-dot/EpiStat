@@ -1,0 +1,73 @@
+﻿.sscoh-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.sscoh-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sscoh-field-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+.sscoh-number-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.sscoh-number-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus);
+}
+
+.sscoh-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.sscoh-toggle-btn {
+  flex: 1 1 calc(50% - var(--space-2));
+  padding: var(--space-2) var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sscoh-toggle-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.sscoh-toggle-btn-active {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--bg-surface));
+  color: var(--color-primary);
+}

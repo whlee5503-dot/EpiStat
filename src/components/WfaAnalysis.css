@@ -1,0 +1,11 @@
+﻿.wfa-badge-ok {
+  color: var(--color-primary);
+}
+
+.wfa-badge-warning {
+  color: var(--color-accent);
+}
+
+.wfa-badge-danger {
+  color: var(--color-danger);
+}

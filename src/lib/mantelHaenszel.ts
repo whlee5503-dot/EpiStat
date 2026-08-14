@@ -1,6 +1,8 @@
 ﻿// Mantel-Haenszel stratified analysis for 2x2 tables
 // Validated against OpenEpi TwobyTwo calculator (openepi.com)
 
+import { chiSquarePValue, Z_95 } from "./statUtils";
+
 export interface TwoByTwoTable {
   a: number; // exposed, disease+
   b: number; // exposed, disease-
@@ -45,34 +47,6 @@ export function analyzeSingleTable(t: TwoByTwoTable): SingleTableResult {
 
   return { chiSquareUncorrected, chiSquareYates, oddsRatio, riskRatio, riskDifference };
 }
-
-// --- Normal distribution helpers ---
-
-function normalCDF(x: number): number {
-  const t = 1 / (1 + 0.2316419 * Math.abs(x));
-  const d = 0.3989423 * Math.exp((-x * x) / 2);
-  let prob =
-    d *
-    t *
-    (0.3193815 +
-      t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
-  if (x > 0) prob = 1 - prob;
-  return prob;
-}
-
-function chiSquarePValue1df(chiSq: number): number {
-  const z = Math.sqrt(chiSq);
-  return 2 * (1 - normalCDF(z));
-}
-
-// Wilson-Hilferty approximation for chi-square p-value with df degrees of freedom
-function chiSquarePValueGeneral(chiSq: number, df: number): number {
-  const h = 2 / (9 * df);
-  const z = (Math.pow(chiSq / df, 1 / 3) - (1 - h)) / Math.sqrt(h);
-  return 1 - normalCDF(z);
-}
-
-const Z_95 = 1.959963985;
 
 // --- Mantel-Haenszel stratified combination ---
 
@@ -152,7 +126,7 @@ export function mantelHaenszel(strata: TwoByTwoTable[]): MantelHaenszelResult {
 
   const diff = sumA - sumE;
   const chiSquareMH = (diff * diff) / sumV;
-  const pValueMH = chiSquarePValue1df(chiSquareMH);
+  const pValueMH = chiSquarePValue(chiSquareMH, 1);
 
   const breslowDayOR = breslowDayTest(strata, orMH);
 
@@ -180,7 +154,7 @@ function breslowDayTest(
   let sumVarA = 0;
 
   for (const t of strata) {
-    const { a, b, c, d } = t;
+    const { a, b, c } = t;
     const ni = n(t);
     const n1 = a + b;
     const m1 = a + c;
@@ -203,7 +177,6 @@ function breslowDayTest(
     }
 
     const n2 = ni - n1;
-    const m2 = ni - m1;
     const varA =
       1 / (1 / A + 1 / (n1 - A) + 1 / (m1 - A) + 1 / (n2 - m1 + A));
 
@@ -216,8 +189,176 @@ function breslowDayTest(
   const statTarone = stat - (sumADiff * sumADiff) / sumVarA;
 
   const df = strata.length - 1;
-  const pValue =
-    df === 1 ? chiSquarePValue1df(statTarone) : chiSquarePValueGeneral(statTarone, df);
+  const pValue = chiSquarePValue(statTarone, df);
 
   return { chiSquare: statTarone, pValue, df };
+}
+// ---------------------------------------------------------------------
+// Breslow-Day test for Risk Ratio homogeneity (Sullivan, TwobyTwoDoc.pdf)
+// Companion to the existing OR-based breslowDayTest above.
+// ---------------------------------------------------------------------
+
+export interface DirectlyAdjustedRRResult {
+  rrDirect: number;
+  ciLower: number;
+  ciUpper: number;
+  perStratum: { rr: number; lnRR: number; weight: number }[];
+}
+
+/**
+ * Directly adjusted (inverse-variance weighted) risk ratio across strata,
+ * per Sullivan TwobyTwoDoc.pdf. Var(ln RRi) = 1/ai - 1/n1i + 1/ci - 1/n0i,
+ * where n1i = ai+bi (exposed total), n0i = ci+di (unexposed total).
+ */
+export function directlyAdjustedRR(strata: TwoByTwoTable[]): DirectlyAdjustedRRResult {
+  const perStratum = strata.map((t) => {
+    const { a, b, c, d } = t;
+    const n1 = a + b;
+    const n0 = c + d;
+    const rr = (a / n1) / (c / n0);
+    const lnRR = Math.log(rr);
+    const varLnRR = 1 / a - 1 / n1 + 1 / c - 1 / n0;
+    const weight = 1 / varLnRR;
+    return { rr, lnRR, weight };
+  });
+
+  const sumW = perStratum.reduce((s, r) => s + r.weight, 0);
+  const sumWLnRR = perStratum.reduce((s, r) => s + r.weight * r.lnRR, 0);
+  const rrDirect = Math.exp(sumWLnRR / sumW);
+
+  const se = 1 / Math.sqrt(sumW);
+  const ciLower = rrDirect * Math.exp(-Z_95 * se);
+  const ciUpper = rrDirect * Math.exp(Z_95 * se);
+
+  return { rrDirect, ciLower, ciUpper, perStratum };
+}
+
+export interface BreslowDayRRResult {
+  chiSquare: number;
+  pValue: number;
+  df: number;
+}
+
+/**
+ * Breslow-Day test of homogeneity for the Risk Ratio across strata.
+ * chi^2 = sum[ wi * (ln(RRi) - ln(RRDirect))^2 ], df = s-1.
+ * Validated against Sullivan TwobyTwoDoc.pdf worked example
+ * (mother's education / anemia data): expect chiSquare=1.48579, p=.223.
+ */
+export function breslowDayTestRR(strata: TwoByTwoTable[]): BreslowDayRRResult {
+  const { rrDirect, perStratum } = directlyAdjustedRR(strata);
+  const lnRRDirect = Math.log(rrDirect);
+
+  const chiSquare = perStratum.reduce((s, r) => {
+    const diff = r.lnRR - lnRRDirect;
+    return s + r.weight * diff * diff;
+  }, 0);
+
+  const df = strata.length - 1;
+  const pValue = chiSquarePValue(chiSquare, df);
+
+  return { chiSquare, pValue, df };
+}
+
+// ---------------------------------------------------------------------
+// Fisher's exact / Mid-P exact test for a single 2x2 table (hypergeometric)
+// Distinct from SMR's Poisson-based and MatchCC's binomial-based exact
+// tests: here the table margins are fixed and 'a' follows a hypergeometric
+// distribution under the null of no association.
+// ---------------------------------------------------------------------
+
+function logGammaTwoByTwo(x: number): number {
+  const g = 7;
+  const coefficients = [
+    0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+    771.32342877765313, -176.61502916214059, 12.507343278686905,
+    -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7,
+  ];
+  if (x < 0.5) {
+    return Math.log(Math.PI / Math.sin(Math.PI * x)) - logGammaTwoByTwo(1 - x);
+  }
+  x -= 1;
+  let a = coefficients[0];
+  const t = x + g + 0.5;
+  for (let i = 1; i < g + 2; i++) {
+    a += coefficients[i] / (x + i);
+  }
+  return 0.5 * Math.log(2 * Math.PI) + (x + 0.5) * Math.log(t) - t + Math.log(a);
+}
+
+function logChoose(n: number, k: number): number {
+  if (k < 0 || k > n) return -Infinity;
+  return logGammaTwoByTwo(n + 1) - logGammaTwoByTwo(k + 1) - logGammaTwoByTwo(n - k + 1);
+}
+
+/** P(X = k) for X ~ Hypergeometric(population N, K successes, n draws). */
+function hypergeomPMF(k: number, K: number, N: number, n: number): number {
+  const kMin = Math.max(0, n - (N - K));
+  const kMax = Math.min(n, K);
+  if (k < kMin || k > kMax) return 0;
+  return Math.exp(logChoose(K, k) + logChoose(N - K, n - k) - logChoose(N, n));
+}
+
+export interface ExactTest2x2Result {
+  pValue: number;
+}
+
+/** P(X <= k) for X ~ Hypergeometric(population N, K successes, n draws). */
+function hypergeomCDF(k: number, K: number, N: number, n: number): number {
+  if (k < 0) return 0;
+  const kMax = Math.min(n, K);
+  if (k >= kMax) return 1;
+  let sum = 0;
+  for (let i = 0; i <= k; i++) {
+    sum += hypergeomPMF(i, K, N, n);
+  }
+  return sum;
+}
+
+/**
+ * Two-tailed Fisher's exact test for a 2x2 table with count data.
+ * Conditional on fixed margins, 'a' ~ Hypergeometric(N=total, K=col1, n=row1).
+ * Two-tailed p-value = 2 * one-tailed p-value, capped at 1 -- the
+ * "doubled one-tail" convention, matching OpenEpi's live TwobyTwo
+ * calculator and consistent with the same convention already used
+ * elsewhere in this codebase (smr.ts's fisherExactPValue, matchcc.ts's
+ * fisherExactTest), rather than the alternative "sum of small p's"
+ * convention (e.g. R's fisher.test, scipy.stats.fisher_exact).
+ */
+export function fisherExact2x2(t: TwoByTwoTable): ExactTest2x2Result {
+  const { a, b, c, d } = t;
+  const row1 = a + b;
+  const col1 = a + c;
+  const total = a + b + c + d;
+  const mean = (row1 * col1) / total;
+
+  const oneTailP =
+    a >= mean
+      ? 1 - hypergeomCDF(a - 1, col1, total, row1)
+      : hypergeomCDF(a, col1, total, row1);
+
+  return { pValue: Math.min(1, 2 * oneTailP) };
+}
+
+/**
+ * Mid-P exact test for a 2x2 table: the one-tailed p-value minus half the
+ * point probability of the observed table, doubled -- the same
+ * doubled-one-tail convention as fisherExact2x2 above, mirroring the
+ * mid-p adjustment pattern used in the SMR and MatchCC modules.
+ */
+export function midPExact2x2(t: TwoByTwoTable): ExactTest2x2Result {
+  const { a, b, c, d } = t;
+  const row1 = a + b;
+  const col1 = a + c;
+  const total = a + b + c + d;
+  const mean = (row1 * col1) / total;
+  const pObs = hypergeomPMF(a, col1, total, row1);
+
+  const oneTailP =
+    a >= mean
+      ? 1 - hypergeomCDF(a - 1, col1, total, row1)
+      : hypergeomCDF(a, col1, total, row1);
+  const midPOneTail = oneTailP - 0.5 * pObs;
+
+  return { pValue: Math.max(0, Math.min(1, 2 * midPOneTail)) };
 }

@@ -1,0 +1,72 @@
+﻿.sscc-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.sscc-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sscc-field-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+.sscc-number-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.sscc-number-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus);
+}
+
+.sscc-toggle {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.sscc-toggle-btn {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sscc-toggle-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.sscc-toggle-btn-active {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--bg-surface));
+  color: var(--color-primary);
+}

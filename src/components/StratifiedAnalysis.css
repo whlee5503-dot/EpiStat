@@ -283,3 +283,29 @@
     position: static;
   }
 }
+
+.strat-toggle-btn {
+  border: 1px solid var(--border-color, #d8ddd8);
+  background: transparent;
+  color: var(--text-muted, #6b7a6f);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.strat-toggle-btn:hover {
+  background: var(--bg-hover, #eef2ee);
+}
+
+.strat-toggle-btn-active {
+  background: var(--accent, #2f6b4f);
+  border-color: var(--accent, #2f6b4f);
+  color: #fff;
+  font-weight: 600;
+}
+
+.strat-toggle-btn-active:hover {
+  background: var(--accent, #2f6b4f);
+}

@@ -1,4 +1,4 @@
-﻿import { analyzeSingleTable, mantelHaenszel, TwoByTwoTable } from './mantelHaenszel';
+﻿import { mantelHaenszel, type TwoByTwoTable } from './mantelHaenszel';
 
 const stratum1: TwoByTwoTable = { a: 66, b: 36, c: 28, d: 32 };
 const stratum2: TwoByTwoTable = { a: 40, b: 20, c: 15, d: 25 };

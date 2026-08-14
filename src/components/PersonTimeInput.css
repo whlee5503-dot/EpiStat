@@ -1,0 +1,99 @@
+﻿.pt-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.pt-table-scroll {
+  overflow-x: auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.pt-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px;
+}
+
+.pt-table th {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  padding: var(--space-1) var(--space-2);
+  text-align: center;
+}
+
+.pt-rowlbl {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding-right: var(--space-2);
+  white-space: nowrap;
+}
+
+.pt-cell-input {
+  width: 90px;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.pt-cell-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus);
+}
+
+.pt-remove-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0;
+  transition: all var(--transition-fast);
+}
+
+.pt-remove-btn:hover {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.pt-add-btn {
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pt-add-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+}
+
+.pt-legend {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}

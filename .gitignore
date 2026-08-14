@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+PersonTime2Doc.pdf
+test-*.ts
