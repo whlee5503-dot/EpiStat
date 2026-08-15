@@ -206,6 +206,16 @@
   padding: var(--space-4) var(--space-6);
   border-bottom: 1px solid var(--border-color);
   background: var(--bg-surface);
+  /* Narrow-viewport fix: with 11 module buttons, flex items can overflow
+     the container on small screens and simply get clipped (no scroll,
+     no wrap). Wrapping to multiple lines gets messy at this item count,
+     so instead we let the bar scroll horizontally, like a mobile tab
+     bar — every button stays reachable at any viewport width. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
 .app-nav-btn {
@@ -219,6 +229,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
+  /* Prevent buttons from shrinking/wrapping their label text as the
+     flex container's available width shrinks — each button keeps its
+     natural size and the bar scrolls instead. */
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .app-nav-btn:hover {
@@ -230,6 +245,18 @@
   color: var(--color-primary);
   border-color: var(--color-primary);
   background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+@media (max-width: 640px) {
+  .app-nav {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-1);
+  }
+
+  .app-nav-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.8rem;
+  }
 }
 
 .app-module-loading {
