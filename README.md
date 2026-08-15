@@ -6,8 +6,8 @@
 
 ## 📢 Status
 
-- **Digital Public Goods (DPG):** Application in preparation — not yet submitted to the [Digital Public Goods Alliance (DPGA)](https://digitalpublicgoods.net)
-- **Academic Citation:** Zenodo DOI — pending
+- **Digital Public Goods (DPG):** Submitted to the [Digital Public Goods Alliance (DPGA)](https://digitalpublicgoods.net) — under review (GID0094071)
+- **Academic Citation:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21940895.svg)](https://doi.org/10.5281/zenodo.21940895)
 - Part of the [PublicHealth Tech Lab](https://phtlab.org) family of offline-first public health tools, alongside [EpiCalc](https://epi.chem-health-calc.com), [EpiLog](https://epilog-d72.pages.dev), [EpiAid](https://epiaid.pages.dev), and [VaxGuard](https://vaxguard.pages.dev)
 
 ---
@@ -42,7 +42,7 @@ epidemiologists, MPH students, and public health practitioners worldwide.
 
 **<https://epistat.phtlab.org>**
 
-No login required. Works on mobile. English / 한국어 / Français.
+No login required. Works on mobile. English / 한국어 / French.
 
 ---
 
