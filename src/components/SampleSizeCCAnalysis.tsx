@@ -51,7 +51,7 @@ const SampleSizeCCAnalysis: React.FC<Props> = ({ lang }) => {
       </h2>
 
       <div className="rxc-top">
-        <SampleSizeCCInput value={input} mode={mode} onChange={handleChange} />
+        <SampleSizeCCInput value={input} mode={mode} onChange={handleChange} lang={lang} />
 
         <div className="formula-box">
           <button

@@ -1,13 +1,16 @@
 ﻿import React from 'react';
 import type { MatchCCTable } from '../lib/matchcc';
 import './MatchCCInput.css';
+import { translations, type Lang } from '../i18n/translations';
 
 interface MatchCCInputProps {
   table: MatchCCTable;
   onChange: (table: MatchCCTable) => void;
+  lang: Lang;
 }
 
-const MatchCCInput: React.FC<MatchCCInputProps> = ({ table, onChange }) => {
+const MatchCCInput: React.FC<MatchCCInputProps> = ({ table, onChange, lang }) => {
+  const t = translations[lang].matchcc.input;
   const { w, x, y, z } = table;
 
   const updateCell = (key: keyof MatchCCTable, raw: string) => {
@@ -25,18 +28,18 @@ const MatchCCInput: React.FC<MatchCCInputProps> = ({ table, onChange }) => {
     <div className="mcc-input-wrapper">
       <div className="mcc-chitbl">
         <div className="mcc-corner" />
-        <div className="mcc-hdr">Control Exposed</div>
-        <div className="mcc-hdr">Control Not Exposed</div>
+        <div className="mcc-hdr">{t.controlExposedHdr}</div>
+        <div className="mcc-hdr">{t.controlNotExposedHdr}</div>
         <div className="mcc-hdr">N</div>
 
-        <div className="mcc-rowlbl">Case Exposed</div>
+        <div className="mcc-rowlbl">{t.caseExposedRowLabel}</div>
         <input
           type="number"
           className="mcc-cell"
           min={0}
           value={w}
           onChange={(e) => updateCell('w', e.target.value)}
-          aria-label="W: case exposed, control exposed"
+          aria-label={t.ariaW}
         />
         <input
           type="number"
@@ -44,18 +47,18 @@ const MatchCCInput: React.FC<MatchCCInputProps> = ({ table, onChange }) => {
           min={0}
           value={x}
           onChange={(e) => updateCell('x', e.target.value)}
-          aria-label="X: case exposed, control not exposed"
+          aria-label={t.ariaX}
         />
         <div className="mcc-total">{row1}</div>
 
-        <div className="mcc-rowlbl">Case Not Exposed</div>
+        <div className="mcc-rowlbl">{t.caseNotExposedRowLabel}</div>
         <input
           type="number"
           className="mcc-cell mcc-cell-discordant"
           min={0}
           value={y}
           onChange={(e) => updateCell('y', e.target.value)}
-          aria-label="Y: case not exposed, control exposed"
+          aria-label={t.ariaY}
         />
         <input
           type="number"
@@ -63,7 +66,7 @@ const MatchCCInput: React.FC<MatchCCInputProps> = ({ table, onChange }) => {
           min={0}
           value={z}
           onChange={(e) => updateCell('z', e.target.value)}
-          aria-label="Z: case not exposed, control not exposed"
+          aria-label={t.ariaZ}
         />
         <div className="mcc-total">{row2}</div>
 
@@ -75,10 +78,7 @@ const MatchCCInput: React.FC<MatchCCInputProps> = ({ table, onChange }) => {
 
       <div className="mcc-legend">
         <span className="mcc-legend-swatch mcc-legend-swatch-discordant" />
-        <span>
-          Highlighted cells (X, Y) are the discordant pairs used in all
-          calculations. W and Z (concordant pairs) are shown for reference only.
-        </span>
+        <span>{t.legendText}</span>
       </div>
     </div>
   );

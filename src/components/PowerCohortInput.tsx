@@ -1,5 +1,6 @@
 ﻿import './PowerCohortInput.css';
 import type { PowerCohortInput as InputType } from '../lib/powerCohort';
+import { translations, type Lang } from '../i18n/translations';
 
 interface Props {
   value: InputType;
@@ -7,6 +8,7 @@ interface Props {
   exposedLabel: string;
   unexposedLabel: string;
   outcomeLabel: string;
+  lang: Lang;
 }
 
 export default function PowerCohortInput({
@@ -15,11 +17,14 @@ export default function PowerCohortInput({
   exposedLabel,
   unexposedLabel,
   outcomeLabel,
+  lang,
 }: Props) {
+  const t = translations[lang].samplesizepower.powerCohortBase.input;
+
   return (
     <div className="pcoh-input-wrapper">
       <div className="pcoh-field">
-        <span className="pcoh-field-label">Two-sided confidence level, %</span>
+        <span className="pcoh-field-label">{t.confidenceLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -35,7 +40,9 @@ export default function PowerCohortInput({
       </div>
 
       <div className="pcoh-field">
-        <span className="pcoh-field-label">Number {exposedLabel}</span>
+        <span className="pcoh-field-label">
+          {t.numberLabelTemplate.replace('{label}', exposedLabel)}
+        </span>
         <input
           type="number"
           inputMode="decimal"
@@ -47,7 +54,9 @@ export default function PowerCohortInput({
       </div>
 
       <div className="pcoh-field">
-        <span className="pcoh-field-label">Number {unexposedLabel}</span>
+        <span className="pcoh-field-label">
+          {t.numberLabelTemplate.replace('{label}', unexposedLabel)}
+        </span>
         <input
           type="number"
           inputMode="decimal"
@@ -59,7 +68,11 @@ export default function PowerCohortInput({
       </div>
 
       <div className="pcoh-field">
-        <span className="pcoh-field-label">{outcomeLabel}, {exposedLabel}, %</span>
+        <span className="pcoh-field-label">
+          {t.outcomeLabelTemplate
+            .replace('{outcome}', outcomeLabel)
+            .replace('{label}', exposedLabel)}
+        </span>
         <input
           type="number"
           inputMode="decimal"
@@ -75,7 +88,11 @@ export default function PowerCohortInput({
       </div>
 
       <div className="pcoh-field">
-        <span className="pcoh-field-label">{outcomeLabel}, {unexposedLabel}, %</span>
+        <span className="pcoh-field-label">
+          {t.outcomeLabelTemplate
+            .replace('{outcome}', outcomeLabel)
+            .replace('{label}', unexposedLabel)}
+        </span>
         <input
           type="number"
           inputMode="decimal"

@@ -1,16 +1,20 @@
 ﻿import './SampleSizeMeanInput.css';
 import type { SampleSizeMeanInput as InputType } from '../lib/sampleSizeMean';
+import { translations, type Lang } from '../i18n/translations';
 
 interface Props {
   value: InputType;
   onChange: (value: InputType) => void;
+  lang: Lang;
 }
 
-export default function SampleSizeMeanInput({ value, onChange }: Props) {
+export default function SampleSizeMeanInput({ value, onChange, lang }: Props) {
+  const t = translations[lang].samplesizepower.ssMean.input;
+
   return (
     <div className="ssm-input-wrapper">
       <div className="ssm-field">
-        <span className="ssm-field-label">Two-sided confidence level, %</span>
+        <span className="ssm-field-label">{t.confidenceLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -26,7 +30,7 @@ export default function SampleSizeMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="ssm-field">
-        <span className="ssm-field-label">Power, %</span>
+        <span className="ssm-field-label">{t.powerLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -42,7 +46,7 @@ export default function SampleSizeMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="ssm-field">
-        <span className="ssm-field-label">Ratio of Group 2 to Group 1 (kappa)</span>
+        <span className="ssm-field-label">{t.ratioLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -55,7 +59,7 @@ export default function SampleSizeMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="ssm-field">
-        <span className="ssm-field-label">Standard deviation, Group 1</span>
+        <span className="ssm-field-label">{t.sd1Label}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -68,7 +72,7 @@ export default function SampleSizeMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="ssm-field">
-        <span className="ssm-field-label">Standard deviation, Group 2</span>
+        <span className="ssm-field-label">{t.sd2Label}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -81,7 +85,7 @@ export default function SampleSizeMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="ssm-field">
-        <span className="ssm-field-label">Mean difference to detect</span>
+        <span className="ssm-field-label">{t.meanDiffLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -93,10 +97,7 @@ export default function SampleSizeMeanInput({ value, onChange }: Props) {
             onChange({ ...value, meanDifference: parseFloat(e.target.value) || 0 })
           }
         />
-        <span className="ssm-hint">
-          Enter the smallest difference between group means that would be
-          scientifically or clinically meaningful to detect
-        </span>
+        <span className="ssm-hint">{t.meanDiffHint}</span>
       </div>
     </div>
   );

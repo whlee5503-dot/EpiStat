@@ -120,7 +120,7 @@ const WfhAnalysis: React.FC<Props> = ({ lang }) => {
       </div>
 
       <div className="rxc-top">
-        <WfhInput value={form} onChange={setForm} />
+        <WfhInput value={form} onChange={setForm} lang={lang} />
 
         <div className="formula-box">
           <button

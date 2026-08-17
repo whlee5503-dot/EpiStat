@@ -111,7 +111,7 @@ const BmiAnalysis: React.FC<Props> = ({ lang }) => {
       </div>
 
       <div className="rxc-top">
-        <BmiInput value={form} onChange={setForm} />
+        <BmiInput value={form} onChange={setForm} lang={lang} />
 
         <div className="formula-box">
           <button

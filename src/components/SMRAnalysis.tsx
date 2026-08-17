@@ -71,6 +71,7 @@ const SMRAnalysis: React.FC<Props> = ({ lang }) => {
             expected={expected}
             onChangeObserved={setObserved}
             onChangeExpected={setExpected}
+            lang={lang}
           />
 
           <div className="formula-box">

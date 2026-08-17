@@ -45,7 +45,7 @@ const PowerCCAnalysis: React.FC<Props> = ({ lang }) => {
       </h2>
 
       <div className="rxc-top">
-        <PowerCCInput value={input} onChange={setInput} />
+        <PowerCCInput value={input} onChange={setInput} lang={lang} />
 
         <div className="formula-box">
           <button

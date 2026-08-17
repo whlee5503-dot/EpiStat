@@ -1,16 +1,19 @@
 ﻿import React from 'react';
 import type { DoseResponseTable, LevelCounts } from '../lib/doseResponse';
 import './DoseResponseInput.css';
+import { translations, type Lang } from '../i18n/translations';
 
 interface DoseResponseInputProps {
   table: DoseResponseTable;
   onChange: (table: DoseResponseTable) => void;
+  lang: Lang;
 }
 
 const MIN_LEVELS = 2;
 const MIN_STRATA = 1;
 
-const DoseResponseInput: React.FC<DoseResponseInputProps> = ({ table, onChange }) => {
+const DoseResponseInput: React.FC<DoseResponseInputProps> = ({ table, onChange, lang }) => {
+  const t = translations[lang].doseresponse.input;
   const { scores, strata } = table;
   const numLevels = scores.length;
 
@@ -70,12 +73,12 @@ const DoseResponseInput: React.FC<DoseResponseInputProps> = ({ table, onChange }
           {scores.map((score, li) => (
             <div key={'lvl-' + li} className="dr-levelhdr">
               <div className="dr-levelhdr-title">
-                <span>{'Level ' + li}</span>
+                <span>{t.levelLabelTemplate.replace('{n}', String(li))}</span>
                 {numLevels > MIN_LEVELS && (
                   <button
                     className="dr-remove-btn"
                     onClick={() => removeLevel(li)}
-                    aria-label={'Remove level ' + li}
+                    aria-label={t.removeLevelAriaTemplate.replace('{n}', String(li))}
                     type="button"
                   >
                     X
@@ -83,13 +86,13 @@ const DoseResponseInput: React.FC<DoseResponseInputProps> = ({ table, onChange }
                 )}
               </div>
               <div className="dr-score-row">
-                <span className="dr-score-label">Score</span>
+                <span className="dr-score-label">{t.scoreLabel}</span>
                 <input
                   type="number"
                   className="dr-score-input"
                   value={score}
                   onChange={(e) => updateScore(li, e.target.value)}
-                  aria-label={'Score for level ' + li}
+                  aria-label={t.scoreAriaTemplate.replace('{n}', String(li))}
                 />
               </div>
             </div>
@@ -98,12 +101,12 @@ const DoseResponseInput: React.FC<DoseResponseInputProps> = ({ table, onChange }
           {strata.map((stratum, si) => (
             <React.Fragment key={'stratum-' + si}>
               <div className="dr-rowlbl">
-                <span>{'Stratum ' + (si + 1)}</span>
+                <span>{t.stratumLabelTemplate.replace('{n}', String(si + 1))}</span>
                 {strata.length > MIN_STRATA && (
                   <button
                     className="dr-remove-btn"
                     onClick={() => removeStratum(si)}
-                    aria-label={'Remove stratum ' + (si + 1)}
+                    aria-label={t.removeStratumAriaTemplate.replace('{n}', String(si + 1))}
                     type="button"
                   >
                     X
@@ -113,25 +116,29 @@ const DoseResponseInput: React.FC<DoseResponseInputProps> = ({ table, onChange }
               {stratum.map((lvl, li) => (
                 <div key={'cell-' + si + '-' + li} className="dr-cell">
                   <div className="dr-cell-field">
-                    <label className="dr-cell-label">Cases</label>
+                    <label className="dr-cell-label">{t.casesLabel}</label>
                     <input
                       type="number"
                       className="dr-cell-input"
                       min={0}
                       value={lvl.cases}
                       onChange={(e) => updateCell(si, li, 'cases', e.target.value)}
-                      aria-label={'Stratum ' + (si + 1) + ' level ' + li + ' cases'}
+                      aria-label={t.casesAriaTemplate
+                        .replace('{s}', String(si + 1))
+                        .replace('{l}', String(li))}
                     />
                   </div>
                   <div className="dr-cell-field">
-                    <label className="dr-cell-label">Controls</label>
+                    <label className="dr-cell-label">{t.controlsLabel}</label>
                     <input
                       type="number"
                       className="dr-cell-input"
                       min={0}
                       value={lvl.controls}
                       onChange={(e) => updateCell(si, li, 'controls', e.target.value)}
-                      aria-label={'Stratum ' + (si + 1) + ' level ' + li + ' controls'}
+                      aria-label={t.controlsAriaTemplate
+                        .replace('{s}', String(si + 1))
+                        .replace('{l}', String(li))}
                     />
                   </div>
                 </div>
@@ -143,18 +150,14 @@ const DoseResponseInput: React.FC<DoseResponseInputProps> = ({ table, onChange }
 
       <div className="dr-dim-controls">
         <button className="dr-add-btn" onClick={addStratum} type="button">
-          + Add Stratum
+          {t.addStratumLabel}
         </button>
         <button className="dr-add-btn" onClick={addLevel} type="button">
-          + Add Level
+          {t.addLevelLabel}
         </button>
       </div>
 
-      <div className="dr-legend">
-        Level 0 (leftmost) is treated as the baseline/unexposed group. Scores
-        should increase with exposure (e.g. 0, 1, 2) but can be edited to use
-        category midpoints or any ordered numeric sequence.
-      </div>
+      <div className="dr-legend">{t.legendText}</div>
     </div>
   );
 };

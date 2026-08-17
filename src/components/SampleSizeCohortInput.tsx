@@ -1,6 +1,7 @@
 ﻿import { useState } from 'react';
 import './SampleSizeCohortInput.css';
 import type { SampleSizeCohortInput as InputType } from '../lib/sampleSizeCohort';
+import { translations, type Lang } from '../i18n/translations';
 
 export type CohortEffectMode = 'oddsRatio' | 'riskRatio' | 'riskDifference' | 'exposedOutcome';
 
@@ -8,14 +9,8 @@ interface Props {
   value: InputType;
   mode: CohortEffectMode;
   onChange: (value: InputType, mode: CohortEffectMode) => void;
+  lang: Lang;
 }
-
-const MODE_LABELS: Record<CohortEffectMode, string> = {
-  oddsRatio: 'Odds Ratio',
-  riskRatio: 'Risk Ratio',
-  riskDifference: 'Risk Diff. (%)',
-  exposedOutcome: '% Exposed w/ Outcome',
-};
 
 function clearOtherModes(base: InputType, mode: CohortEffectMode, val: number): InputType {
   const next: InputType = {
@@ -28,7 +23,16 @@ function clearOtherModes(base: InputType, mode: CohortEffectMode, val: number): 
   return next;
 }
 
-export default function SampleSizeCohortInput({ value, mode, onChange }: Props) {
+export default function SampleSizeCohortInput({ value, mode, onChange, lang }: Props) {
+  const t = translations[lang].samplesizepower.ssCohort.input;
+
+  const MODE_LABELS: Record<CohortEffectMode, string> = {
+    oddsRatio: t.modeOddsRatio,
+    riskRatio: t.modeRiskRatio,
+    riskDifference: t.modeRiskDifference,
+    exposedOutcome: t.modeExposedOutcome,
+  };
+
   const [text, setText] = useState<Record<CohortEffectMode, string>>({
     oddsRatio: String(value.oddsRatio ?? 2.1),
     riskRatio: String(value.riskRatio ?? 2),
@@ -46,7 +50,7 @@ export default function SampleSizeCohortInput({ value, mode, onChange }: Props) 
   return (
     <div className="sscoh-input-wrapper">
       <div className="sscoh-field">
-        <span className="sscoh-field-label">Two-sided confidence level, %</span>
+        <span className="sscoh-field-label">{t.confidenceLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -65,7 +69,7 @@ export default function SampleSizeCohortInput({ value, mode, onChange }: Props) 
       </div>
 
       <div className="sscoh-field">
-        <span className="sscoh-field-label">Power, %</span>
+        <span className="sscoh-field-label">{t.powerLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -81,7 +85,7 @@ export default function SampleSizeCohortInput({ value, mode, onChange }: Props) 
       </div>
 
       <div className="sscoh-field">
-        <span className="sscoh-field-label">Ratio of unexposed to exposed (r)</span>
+        <span className="sscoh-field-label">{t.ratioLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -99,7 +103,7 @@ export default function SampleSizeCohortInput({ value, mode, onChange }: Props) 
       </div>
 
       <div className="sscoh-field">
-        <span className="sscoh-field-label">Unexposed with outcome, %</span>
+        <span className="sscoh-field-label">{t.unexposedOutcomeLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -118,7 +122,7 @@ export default function SampleSizeCohortInput({ value, mode, onChange }: Props) 
       </div>
 
       <div className="sscoh-field">
-        <span className="sscoh-field-label">Effect size, given as</span>
+        <span className="sscoh-field-label">{t.effectSizeLabel}</span>
         <div className="sscoh-toggle">
           {(Object.keys(MODE_LABELS) as CohortEffectMode[]).map((m) => (
             <button

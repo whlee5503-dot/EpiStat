@@ -1,16 +1,20 @@
 ﻿import './PowerCCInput.css';
 import type { PowerMeanInput as InputType } from '../lib/powerMean';
+import { translations, type Lang } from '../i18n/translations';
 
 interface Props {
   value: InputType;
   onChange: (value: InputType) => void;
+  lang: Lang;
 }
 
-export default function PowerMeanInput({ value, onChange }: Props) {
+export default function PowerMeanInput({ value, onChange, lang }: Props) {
+  const t = translations[lang].samplesizepower.powerMean.input;
+
   return (
     <div className="pcc-input-wrapper">
       <div className="pcc-field">
-        <span className="pcc-field-label">Two-sided confidence level, %</span>
+        <span className="pcc-field-label">{t.confidenceLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -26,7 +30,7 @@ export default function PowerMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="pcc-field">
-        <span className="pcc-field-label">Mean difference (Group 1 - Group 2)</span>
+        <span className="pcc-field-label">{t.meanDiffLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -38,7 +42,7 @@ export default function PowerMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="pcc-field">
-        <span className="pcc-field-label">Group 1: sample size (n1)</span>
+        <span className="pcc-field-label">{t.n1Label}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -50,7 +54,7 @@ export default function PowerMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="pcc-field">
-        <span className="pcc-field-label">Group 1: standard deviation (s1)</span>
+        <span className="pcc-field-label">{t.s1Label}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -63,7 +67,7 @@ export default function PowerMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="pcc-field">
-        <span className="pcc-field-label">Group 2: sample size (n2)</span>
+        <span className="pcc-field-label">{t.n2Label}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -75,7 +79,7 @@ export default function PowerMeanInput({ value, onChange }: Props) {
       </div>
 
       <div className="pcc-field">
-        <span className="pcc-field-label">Group 2: standard deviation (s2)</span>
+        <span className="pcc-field-label">{t.s2Label}</span>
         <input
           type="number"
           inputMode="decimal"

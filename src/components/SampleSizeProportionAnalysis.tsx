@@ -46,7 +46,7 @@ const SampleSizeProportionAnalysis: React.FC<Props> = ({ lang }) => {
       </h2>
 
       <div className="rxc-top">
-        <SampleSizeProportionInput value={input} onChange={setInput} />
+        <SampleSizeProportionInput value={input} onChange={setInput} lang={lang} />
 
         <div className="formula-box">
           <button

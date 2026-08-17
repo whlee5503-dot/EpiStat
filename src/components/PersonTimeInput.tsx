@@ -1,9 +1,11 @@
 ﻿import './PersonTimeInput.css';
 import type { PersonTimeStratum } from '../lib/personTime';
+import { translations, type Lang } from '../i18n/translations';
 
 interface PersonTimeInputProps {
   strata: PersonTimeStratum[];
   onChange: (strata: PersonTimeStratum[]) => void;
+  lang: Lang;
 }
 
 const DEFAULT_STRATUM: PersonTimeStratum = {
@@ -13,7 +15,9 @@ const DEFAULT_STRATUM: PersonTimeStratum = {
   personTimeUnexposed: 0,
 };
 
-export default function PersonTimeInput({ strata, onChange }: PersonTimeInputProps) {
+export default function PersonTimeInput({ strata, onChange, lang }: PersonTimeInputProps) {
+  const t = translations[lang].persontime.input;
+
   const updateStratum = (
     index: number,
     field: keyof PersonTimeStratum,
@@ -41,16 +45,16 @@ export default function PersonTimeInput({ strata, onChange }: PersonTimeInputPro
           <thead>
             <tr>
               <th></th>
-              <th colSpan={2}>Exposed</th>
-              <th colSpan={2}>Unexposed</th>
+              <th colSpan={2}>{t.exposedHdr}</th>
+              <th colSpan={2}>{t.unexposedHdr}</th>
               <th></th>
             </tr>
             <tr>
               <th></th>
-              <th>Cases</th>
-              <th>Person-time</th>
-              <th>Cases</th>
-              <th>Person-time</th>
+              <th>{t.casesHdr}</th>
+              <th>{t.personTimeHdr}</th>
+              <th>{t.casesHdr}</th>
+              <th>{t.personTimeHdr}</th>
               <th></th>
             </tr>
           </thead>
@@ -58,7 +62,9 @@ export default function PersonTimeInput({ strata, onChange }: PersonTimeInputPro
             {strata.map((s, i) => (
               <tr key={i}>
                 <td className="pt-rowlbl">
-                  {strata.length > 1 ? 'Stratum ' + (i + 1) : 'Data'}
+                  {strata.length > 1
+                    ? t.stratumLabelTemplate.replace('{n}', String(i + 1))
+                    : t.dataLabel}
                 </td>
                 <td>
                   <input
@@ -122,15 +128,10 @@ export default function PersonTimeInput({ strata, onChange }: PersonTimeInputPro
       </div>
 
       <button type="button" className="pt-add-btn" onClick={addStratum}>
-        + Add Stratum
+        {t.addStratumLabel}
       </button>
 
-      <div className="pt-legend">
-        Person-time can be in any consistent unit (e.g. person-years,
-        person-weeks). With a single stratum, results show the crude
-        incidence rate ratio/difference only. Add strata to see
-        directly-adjusted and Mantel-Haenszel-adjusted estimates.
-      </div>
+      <div className="pt-legend">{t.legendText}</div>
     </div>
   );
 }

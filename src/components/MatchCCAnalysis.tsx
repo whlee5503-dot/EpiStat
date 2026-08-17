@@ -61,7 +61,7 @@ const MatchCCAnalysis: React.FC<Props> = ({ lang }) => {
 
       <div className="strat-layout">
         <div className="strat-left">
-          <MatchCCInput table={table} onChange={setTable} />
+          <MatchCCInput table={table} onChange={setTable} lang={lang} />
 
           <div className="formula-box">
             <button

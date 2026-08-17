@@ -1,5 +1,6 @@
 ﻿import './WfaInput.css';
 import type { Sex } from '../lib/bodySize';
+import { translations, type Lang } from '../i18n/translations';
 
 export interface WfaFormState {
   sex: Sex;
@@ -10,9 +11,12 @@ export interface WfaFormState {
 interface WfaInputProps {
   value: WfaFormState;
   onChange: (value: WfaFormState) => void;
+  lang: Lang;
 }
 
-export default function WfaInput({ value, onChange }: WfaInputProps) {
+export default function WfaInput({ value, onChange, lang }: WfaInputProps) {
+  const t = translations[lang].wfa.input;
+
   const ageNum = parseFloat(value.ageMonths);
   const weightNum = parseFloat(value.weightKg);
   const ageError =
@@ -23,7 +27,7 @@ export default function WfaInput({ value, onChange }: WfaInputProps) {
   return (
     <div className="wfa-input-wrapper">
       <div className="wfa-field">
-        <span className="wfa-field-label">Sex</span>
+        <span className="wfa-field-label">{t.sexLabel}</span>
         <div className="wfa-sex-toggle">
           <button
             type="button"
@@ -32,7 +36,7 @@ export default function WfaInput({ value, onChange }: WfaInputProps) {
             }
             onClick={() => onChange({ ...value, sex: 'M' })}
           >
-            Boy
+            {t.boyLabel}
           </button>
           <button
             type="button"
@@ -41,13 +45,13 @@ export default function WfaInput({ value, onChange }: WfaInputProps) {
             }
             onClick={() => onChange({ ...value, sex: 'F' })}
           >
-            Girl
+            {t.girlLabel}
           </button>
         </div>
       </div>
 
       <div className="wfa-field">
-        <span className="wfa-field-label">Age (months)</span>
+        <span className="wfa-field-label">{t.ageLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -56,18 +60,16 @@ export default function WfaInput({ value, onChange }: WfaInputProps) {
           step={0.1}
           className="wfa-number-input"
           value={value.ageMonths}
-          placeholder="0-60"
+          placeholder={t.agePlaceholder}
           onChange={(e) => onChange({ ...value, ageMonths: e.target.value })}
         />
         {ageError && (
-          <span className="wfa-input-error">
-            Enter an age between 0 and 60 months
-          </span>
+          <span className="wfa-input-error">{t.ageError}</span>
         )}
       </div>
 
       <div className="wfa-field">
-        <span className="wfa-field-label">Weight (kg)</span>
+        <span className="wfa-field-label">{t.weightLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -75,11 +77,11 @@ export default function WfaInput({ value, onChange }: WfaInputProps) {
           step={0.01}
           className="wfa-number-input"
           value={value.weightKg}
-          placeholder="e.g. 8.9"
+          placeholder={t.weightPlaceholder}
           onChange={(e) => onChange({ ...value, weightKg: e.target.value })}
         />
         {weightError && (
-          <span className="wfa-input-error">Enter a weight greater than 0</span>
+          <span className="wfa-input-error">{t.weightError}</span>
         )}
       </div>
     </div>

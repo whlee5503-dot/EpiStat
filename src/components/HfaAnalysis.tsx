@@ -84,7 +84,7 @@ const HfaAnalysis: React.FC<Props> = ({ lang }) => {
       </div>
 
       <div className="rxc-top">
-        <HfaInput value={form} onChange={setForm} />
+        <HfaInput value={form} onChange={setForm} lang={lang} />
 
         <div className="formula-box">
           <button

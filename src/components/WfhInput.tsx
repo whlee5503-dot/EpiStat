@@ -1,6 +1,7 @@
 ﻿import './WfhInput.css';
 import type { Sex } from '../lib/bodySize';
 import type { MeasurementType } from '../lib/hfa';
+import { translations, type Lang } from '../i18n/translations';
 
 export interface WfhFormState {
   sex: Sex;
@@ -13,9 +14,13 @@ export interface WfhFormState {
 interface WfhInputProps {
   value: WfhFormState;
   onChange: (value: WfhFormState) => void;
+  lang: Lang;
 }
 
-export default function WfhInput({ value, onChange }: WfhInputProps) {
+export default function WfhInput({ value, onChange, lang }: WfhInputProps) {
+  const t = translations[lang].wfh.input;
+  const tWfh = translations[lang].wfh;
+
   const ageNum = parseFloat(value.ageMonths);
   const cmNum = parseFloat(value.lengthOrHeightCm);
   const weightNum = parseFloat(value.weightKg);
@@ -31,10 +36,16 @@ export default function WfhInput({ value, onChange }: WfhInputProps) {
     !isNaN(ageNum) && ageNum >= 24 ? 'height' : 'length';
   const mismatch = value.measurementType !== expectedType;
 
+  const expectedTypeLabel =
+    expectedType === 'height' ? tWfh.measurementTypeHeight : tWfh.measurementTypeLength;
+  const whoExpectsText =
+    t.whoExpectsTemplate.replace('{expectedType}', expectedTypeLabel) +
+    (mismatch ? t.correctionWillApply : '');
+
   return (
     <div className="wfh-input-wrapper">
       <div className="wfh-field">
-        <span className="wfh-field-label">Sex</span>
+        <span className="wfh-field-label">{t.sexLabel}</span>
         <div className="wfh-sex-toggle">
           <button
             type="button"
@@ -43,7 +54,7 @@ export default function WfhInput({ value, onChange }: WfhInputProps) {
             }
             onClick={() => onChange({ ...value, sex: 'M' })}
           >
-            Boy
+            {t.boyLabel}
           </button>
           <button
             type="button"
@@ -52,13 +63,13 @@ export default function WfhInput({ value, onChange }: WfhInputProps) {
             }
             onClick={() => onChange({ ...value, sex: 'F' })}
           >
-            Girl
+            {t.girlLabel}
           </button>
         </div>
       </div>
 
       <div className="wfh-field">
-        <span className="wfh-field-label">Age (months)</span>
+        <span className="wfh-field-label">{t.ageLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -67,18 +78,16 @@ export default function WfhInput({ value, onChange }: WfhInputProps) {
           step={0.1}
           className="wfh-number-input"
           value={value.ageMonths}
-          placeholder="0-60"
+          placeholder={t.agePlaceholder}
           onChange={(e) => onChange({ ...value, ageMonths: e.target.value })}
         />
         {ageError && (
-          <span className="wfh-input-error">
-            Enter an age between 0 and 60 months
-          </span>
+          <span className="wfh-input-error">{t.ageError}</span>
         )}
       </div>
 
       <div className="wfh-field">
-        <span className="wfh-field-label">Measured as</span>
+        <span className="wfh-field-label">{t.measuredAsLabel}</span>
         <div className="wfh-sex-toggle">
           <button
             type="button"
@@ -88,7 +97,7 @@ export default function WfhInput({ value, onChange }: WfhInputProps) {
             }
             onClick={() => onChange({ ...value, measurementType: 'length' })}
           >
-            Length (lying)
+            {t.lengthToggleLabel}
           </button>
           <button
             type="button"
@@ -98,18 +107,15 @@ export default function WfhInput({ value, onChange }: WfhInputProps) {
             }
             onClick={() => onChange({ ...value, measurementType: 'height' })}
           >
-            Height (standing)
+            {t.heightToggleLabel}
           </button>
         </div>
-        <span className="wfh-hint">
-          WHO expects {expectedType} for this age
-          {mismatch ? ' - a 0.7cm correction will be applied' : ''}
-        </span>
+        <span className="wfh-hint">{whoExpectsText}</span>
       </div>
 
       <div className="wfh-field">
         <span className="wfh-field-label">
-          {value.measurementType === 'length' ? 'Length' : 'Height'} (cm)
+          {value.measurementType === 'length' ? t.lengthFieldLabel : t.heightFieldLabel}
         </span>
         <input
           type="number"
@@ -118,20 +124,18 @@ export default function WfhInput({ value, onChange }: WfhInputProps) {
           step={0.1}
           className="wfh-number-input"
           value={value.lengthOrHeightCm}
-          placeholder="e.g. 75.0"
+          placeholder={t.cmValuePlaceholder}
           onChange={(e) =>
             onChange({ ...value, lengthOrHeightCm: e.target.value })
           }
         />
         {cmError && (
-          <span className="wfh-input-error">
-            Enter a length/height greater than 0
-          </span>
+          <span className="wfh-input-error">{t.cmError}</span>
         )}
       </div>
 
       <div className="wfh-field">
-        <span className="wfh-field-label">Weight (kg)</span>
+        <span className="wfh-field-label">{t.weightLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -139,13 +143,11 @@ export default function WfhInput({ value, onChange }: WfhInputProps) {
           step={0.01}
           className="wfh-number-input"
           value={value.weightKg}
-          placeholder="e.g. 9.5"
+          placeholder={t.weightPlaceholder}
           onChange={(e) => onChange({ ...value, weightKg: e.target.value })}
         />
         {weightError && (
-          <span className="wfh-input-error">
-            Enter a weight greater than 0
-          </span>
+          <span className="wfh-input-error">{t.weightError}</span>
         )}
       </div>
     </div>

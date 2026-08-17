@@ -57,6 +57,7 @@ export default function PowerCohortAnalysisBase({
           exposedLabel={exposedLabel}
           unexposedLabel={unexposedLabel}
           outcomeLabel={outcomeLabel}
+          lang={lang}
         />
 
         <div className="formula-box">

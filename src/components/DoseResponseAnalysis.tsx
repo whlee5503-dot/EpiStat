@@ -69,7 +69,7 @@ const DoseResponseAnalysis: React.FC<Props> = ({ lang }) => {
       </div>
 
       <div className="rxc-top">
-        <DoseResponseInput table={table} onChange={setTable} />
+        <DoseResponseInput table={table} onChange={setTable} lang={lang} />
 
         <div className="formula-box">
           <button

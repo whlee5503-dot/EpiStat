@@ -70,7 +70,7 @@ const PersonTimeAnalysis: React.FC<Props> = ({ lang }) => {
       </div>
 
       <div className="rxc-top">
-        <PersonTimeInput strata={strata} onChange={setStrata} />
+        <PersonTimeInput strata={strata} onChange={setStrata} lang={lang} />
 
         <div className="formula-box">
           <button

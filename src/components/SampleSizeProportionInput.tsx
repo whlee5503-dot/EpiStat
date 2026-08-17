@@ -1,16 +1,20 @@
 ﻿import './SampleSizeProportionInput.css';
 import type { SampleSizeProportionInput as InputType } from '../lib/sampleSizeProportion';
+import { translations, type Lang } from '../i18n/translations';
 
 interface Props {
   value: InputType;
   onChange: (value: InputType) => void;
+  lang: Lang;
 }
 
-export default function SampleSizeProportionInput({ value, onChange }: Props) {
+export default function SampleSizeProportionInput({ value, onChange, lang }: Props) {
+  const t = translations[lang].samplesizepower.ssProportion.input;
+
   return (
     <div className="ssp-input-wrapper">
       <div className="ssp-field">
-        <span className="ssp-field-label">Population size (N)</span>
+        <span className="ssp-field-label">{t.populationLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -21,13 +25,11 @@ export default function SampleSizeProportionInput({ value, onChange }: Props) {
             onChange({ ...value, populationSize: parseFloat(e.target.value) || 0 })
           }
         />
-        <span className="ssp-hint">
-          Very large values behave like an infinite population
-        </span>
+        <span className="ssp-hint">{t.populationHint}</span>
       </div>
 
       <div className="ssp-field">
-        <span className="ssp-field-label">Anticipated frequency, % (p)</span>
+        <span className="ssp-field-label">{t.frequencyLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -43,11 +45,11 @@ export default function SampleSizeProportionInput({ value, onChange }: Props) {
             })
           }
         />
-        <span className="ssp-hint">Use 50% if unsure — it gives the largest sample size</span>
+        <span className="ssp-hint">{t.frequencyHint}</span>
       </div>
 
       <div className="ssp-field">
-        <span className="ssp-field-label">Absolute precision, +/- % (d)</span>
+        <span className="ssp-field-label">{t.precisionLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -63,11 +65,11 @@ export default function SampleSizeProportionInput({ value, onChange }: Props) {
             })
           }
         />
-        <span className="ssp-hint">Desired half-width of the confidence interval</span>
+        <span className="ssp-hint">{t.precisionHint}</span>
       </div>
 
       <div className="ssp-field">
-        <span className="ssp-field-label">Design effect (DEFF)</span>
+        <span className="ssp-field-label">{t.deffLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -79,7 +81,7 @@ export default function SampleSizeProportionInput({ value, onChange }: Props) {
             onChange({ ...value, designEffect: parseFloat(e.target.value) || 1 })
           }
         />
-        <span className="ssp-hint">1.0 for simple random sampling; higher for cluster surveys</span>
+        <span className="ssp-hint">{t.deffHint}</span>
       </div>
     </div>
   );

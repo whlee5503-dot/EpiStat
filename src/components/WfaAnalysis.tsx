@@ -74,7 +74,7 @@ const WfaAnalysis: React.FC<Props> = ({ lang }) => {
       </div>
 
       <div className="rxc-top">
-        <WfaInput value={form} onChange={setForm} />
+        <WfaInput value={form} onChange={setForm} lang={lang} />
 
         <div className="formula-box">
           <button

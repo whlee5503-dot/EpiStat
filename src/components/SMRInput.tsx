@@ -1,11 +1,13 @@
 ﻿import React from 'react';
 import './SMRInput.css';
+import { translations, type Lang } from '../i18n/translations';
 
 interface SMRInputProps {
   observed: number;
   expected: number;
   onChangeObserved: (value: number) => void;
   onChangeExpected: (value: number) => void;
+  lang: Lang;
 }
 
 const SMRInput: React.FC<SMRInputProps> = ({
@@ -13,7 +15,10 @@ const SMRInput: React.FC<SMRInputProps> = ({
   expected,
   onChangeObserved,
   onChangeExpected,
+  lang,
 }) => {
+  const t = translations[lang].smr.input;
+
   const handleObservedChange = (raw: string) => {
     const val = Math.max(0, Math.floor(parseFloat(raw) || 0));
     onChangeObserved(val);
@@ -28,7 +33,7 @@ const SMRInput: React.FC<SMRInputProps> = ({
     <div className="smr-input-wrapper">
       <div className="smr-field">
         <label className="smr-label" htmlFor="smr-observed">
-          Observed deaths (a)
+          {t.observedLabel}
         </label>
         <input
           id="smr-observed"
@@ -39,12 +44,12 @@ const SMRInput: React.FC<SMRInputProps> = ({
           value={observed}
           onChange={(e) => handleObservedChange(e.target.value)}
         />
-        <div className="smr-hint">Must be a non-negative integer (Poisson count).</div>
+        <div className="smr-hint">{t.observedHint}</div>
       </div>
 
       <div className="smr-field">
         <label className="smr-label" htmlFor="smr-expected">
-          Expected deaths (lambda)
+          {t.expectedLabel}
         </label>
         <input
           id="smr-expected"
@@ -55,9 +60,7 @@ const SMRInput: React.FC<SMRInputProps> = ({
           value={expected}
           onChange={(e) => handleExpectedChange(e.target.value)}
         />
-        <div className="smr-hint">
-          Based on age-specific reference rates applied to the study population.
-        </div>
+        <div className="smr-hint">{t.expectedHint}</div>
       </div>
     </div>
   );

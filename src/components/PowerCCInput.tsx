@@ -1,16 +1,20 @@
 ﻿import './PowerCCInput.css';
 import type { PowerCCInput as InputType } from '../lib/powerCC';
+import { translations, type Lang } from '../i18n/translations';
 
 interface Props {
   value: InputType;
   onChange: (value: InputType) => void;
+  lang: Lang;
 }
 
-export default function PowerCCInput({ value, onChange }: Props) {
+export default function PowerCCInput({ value, onChange, lang }: Props) {
+  const t = translations[lang].samplesizepower.powerCC.input;
+
   return (
     <div className="pcc-input-wrapper">
       <div className="pcc-field">
-        <span className="pcc-field-label">Two-sided confidence level, %</span>
+        <span className="pcc-field-label">{t.confidenceLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -26,7 +30,7 @@ export default function PowerCCInput({ value, onChange }: Props) {
       </div>
 
       <div className="pcc-field">
-        <span className="pcc-field-label">Number of cases</span>
+        <span className="pcc-field-label">{t.casesLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -38,7 +42,7 @@ export default function PowerCCInput({ value, onChange }: Props) {
       </div>
 
       <div className="pcc-field">
-        <span className="pcc-field-label">Number of controls</span>
+        <span className="pcc-field-label">{t.controlsLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -50,7 +54,7 @@ export default function PowerCCInput({ value, onChange }: Props) {
       </div>
 
       <div className="pcc-field">
-        <span className="pcc-field-label">Cases exposed, %</span>
+        <span className="pcc-field-label">{t.caseExposureLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -66,7 +70,7 @@ export default function PowerCCInput({ value, onChange }: Props) {
       </div>
 
       <div className="pcc-field">
-        <span className="pcc-field-label">Controls exposed, %</span>
+        <span className="pcc-field-label">{t.controlExposureLabel}</span>
         <input
           type="number"
           inputMode="decimal"

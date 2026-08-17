@@ -1,14 +1,18 @@
 ﻿import React from 'react';
 import './RxCInput.css';
+import { translations, type Lang } from '../i18n/translations';
 
 interface RxCInputProps {
   table: number[][];
   onChange: (table: number[][]) => void;
+  lang: Lang;
 }
 
 const MIN_DIM = 2;
 
-const RxCInput: React.FC<RxCInputProps> = ({ table, onChange }) => {
+const RxCInput: React.FC<RxCInputProps> = ({ table, onChange, lang }) => {
+  const t = translations[lang].rxc.input;
+
   const rows = table.length;
   const cols = table[0]?.length ?? 0;
 
@@ -58,7 +62,7 @@ const RxCInput: React.FC<RxCInputProps> = ({ table, onChange }) => {
                 <button
                   className="rxc-remove-btn"
                   onClick={() => removeCol(j)}
-                  aria-label={'Remove column ' + (j + 1)}
+                  aria-label={t.removeColAriaTemplate.replace('{n}', String(j + 1))}
                   type="button"
                 >
                   X
@@ -76,7 +80,7 @@ const RxCInput: React.FC<RxCInputProps> = ({ table, onChange }) => {
                   <button
                     className="rxc-remove-btn"
                     onClick={() => removeRow(i)}
-                    aria-label={'Remove row ' + (i + 1)}
+                    aria-label={t.removeRowAriaTemplate.replace('{n}', String(i + 1))}
                     type="button"
                   >
                     X
@@ -110,10 +114,10 @@ const RxCInput: React.FC<RxCInputProps> = ({ table, onChange }) => {
 
       <div className="rxc-dim-controls">
         <button className="rxc-add-btn" onClick={addRow} type="button">
-          + Add Row
+          {t.addRowLabel}
         </button>
         <button className="rxc-add-btn" onClick={addCol} type="button">
-          + Add Column
+          {t.addColLabel}
         </button>
       </div>
     </div>

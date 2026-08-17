@@ -46,7 +46,7 @@ const PowerMeanAnalysis: React.FC<Props> = ({ lang }) => {
       </h2>
 
       <div className="rxc-top">
-        <PowerMeanInput value={input} onChange={setInput} />
+        <PowerMeanInput value={input} onChange={setInput} lang={lang} />
 
         <div className="formula-box">
           <button

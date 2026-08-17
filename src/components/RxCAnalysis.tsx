@@ -69,7 +69,7 @@ const RxCAnalysis: React.FC<Props> = ({ lang }) => {
       </div>
 
       <div className="rxc-top">
-        <RxCInput table={table} onChange={setTable} />
+        <RxCInput table={table} onChange={setTable} lang={lang} />
 
         <div className="formula-box">
           <button

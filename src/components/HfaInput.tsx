@@ -1,6 +1,7 @@
 ﻿import './HfaInput.css';
 import type { Sex } from '../lib/bodySize';
 import type { MeasurementType } from '../lib/hfa';
+import { translations, type Lang } from '../i18n/translations';
 
 export interface HfaFormState {
   sex: Sex;
@@ -12,9 +13,13 @@ export interface HfaFormState {
 interface HfaInputProps {
   value: HfaFormState;
   onChange: (value: HfaFormState) => void;
+  lang: Lang;
 }
 
-export default function HfaInput({ value, onChange }: HfaInputProps) {
+export default function HfaInput({ value, onChange, lang }: HfaInputProps) {
+  const t = translations[lang].hfa.input;
+  const tHfa = translations[lang].hfa;
+
   const ageNum = parseFloat(value.ageMonths);
   const valueNum = parseFloat(value.measuredValue);
   const ageError =
@@ -26,10 +31,18 @@ export default function HfaInput({ value, onChange }: HfaInputProps) {
     !isNaN(ageNum) && ageNum >= 24 ? 'height' : 'length';
   const mismatch = value.measurementType !== expectedType;
 
+  const expectedTypeLabel =
+    expectedType === 'height'
+      ? tHfa.measurementTypeHeight
+      : tHfa.measurementTypeLength;
+  const whoExpectsText =
+    t.whoExpectsTemplate.replace('{expectedType}', expectedTypeLabel) +
+    (mismatch ? t.correctionWillApply : '');
+
   return (
     <div className="hfa-input-wrapper">
       <div className="hfa-field">
-        <span className="hfa-field-label">Sex</span>
+        <span className="hfa-field-label">{t.sexLabel}</span>
         <div className="hfa-sex-toggle">
           <button
             type="button"
@@ -38,7 +51,7 @@ export default function HfaInput({ value, onChange }: HfaInputProps) {
             }
             onClick={() => onChange({ ...value, sex: 'M' })}
           >
-            Boy
+            {t.boyLabel}
           </button>
           <button
             type="button"
@@ -47,13 +60,13 @@ export default function HfaInput({ value, onChange }: HfaInputProps) {
             }
             onClick={() => onChange({ ...value, sex: 'F' })}
           >
-            Girl
+            {t.girlLabel}
           </button>
         </div>
       </div>
 
       <div className="hfa-field">
-        <span className="hfa-field-label">Age (months)</span>
+        <span className="hfa-field-label">{t.ageLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -62,18 +75,16 @@ export default function HfaInput({ value, onChange }: HfaInputProps) {
           step={0.1}
           className="hfa-number-input"
           value={value.ageMonths}
-          placeholder="0-60"
+          placeholder={t.agePlaceholder}
           onChange={(e) => onChange({ ...value, ageMonths: e.target.value })}
         />
         {ageError && (
-          <span className="hfa-input-error">
-            Enter an age between 0 and 60 months
-          </span>
+          <span className="hfa-input-error">{t.ageError}</span>
         )}
       </div>
 
       <div className="hfa-field">
-        <span className="hfa-field-label">Measured as</span>
+        <span className="hfa-field-label">{t.measuredAsLabel}</span>
         <div className="hfa-sex-toggle">
           <button
             type="button"
@@ -83,7 +94,7 @@ export default function HfaInput({ value, onChange }: HfaInputProps) {
             }
             onClick={() => onChange({ ...value, measurementType: 'length' })}
           >
-            Length (lying)
+            {t.lengthToggleLabel}
           </button>
           <button
             type="button"
@@ -93,18 +104,17 @@ export default function HfaInput({ value, onChange }: HfaInputProps) {
             }
             onClick={() => onChange({ ...value, measurementType: 'height' })}
           >
-            Height (standing)
+            {t.heightToggleLabel}
           </button>
         </div>
-        <span className="hfa-hint">
-          WHO expects {expectedType} for this age
-          {mismatch ? ' - a 0.7cm correction will be applied' : ''}
-        </span>
+        <span className="hfa-hint">{whoExpectsText}</span>
       </div>
 
       <div className="hfa-field">
         <span className="hfa-field-label">
-          {value.measurementType === 'length' ? 'Length' : 'Height'} (cm)
+          {value.measurementType === 'length'
+            ? t.lengthFieldLabel
+            : t.heightFieldLabel}
         </span>
         <input
           type="number"
@@ -113,15 +123,13 @@ export default function HfaInput({ value, onChange }: HfaInputProps) {
           step={0.1}
           className="hfa-number-input"
           value={value.measuredValue}
-          placeholder="e.g. 75.7"
+          placeholder={t.valuePlaceholder}
           onChange={(e) =>
             onChange({ ...value, measuredValue: e.target.value })
           }
         />
         {valueError && (
-          <span className="hfa-input-error">
-            Enter a measurement greater than 0
-          </span>
+          <span className="hfa-input-error">{t.valueError}</span>
         )}
       </div>
     </div>

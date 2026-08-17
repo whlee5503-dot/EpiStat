@@ -1,6 +1,7 @@
 ﻿import { useState } from 'react';
 import './SampleSizeCCInput.css';
 import type { SampleSizeCCInput as InputType } from '../lib/sampleSizeCC';
+import { translations, type Lang } from '../i18n/translations';
 
 export type ExposureMode = 'oddsRatio' | 'caseExposure';
 
@@ -8,9 +9,12 @@ interface Props {
   value: InputType;
   mode: ExposureMode;
   onChange: (value: InputType, mode: ExposureMode) => void;
+  lang: Lang;
 }
 
-export default function SampleSizeCCInput({ value, mode, onChange }: Props) {
+export default function SampleSizeCCInput({ value, mode, onChange, lang }: Props) {
+  const t = translations[lang].samplesizepower.ssCC.input;
+
   const [oddsRatioText, setOddsRatioText] = useState(String(value.oddsRatio ?? 2));
   const [caseExposureText, setCaseExposureText] = useState(
     String(((value.caseExposure ?? 0.5714) * 100).toFixed(2))
@@ -19,7 +23,7 @@ export default function SampleSizeCCInput({ value, mode, onChange }: Props) {
   return (
     <div className="sscc-input-wrapper">
       <div className="sscc-field">
-        <span className="sscc-field-label">Two-sided confidence level, %</span>
+        <span className="sscc-field-label">{t.confidenceLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -38,7 +42,7 @@ export default function SampleSizeCCInput({ value, mode, onChange }: Props) {
       </div>
 
       <div className="sscc-field">
-        <span className="sscc-field-label">Power, %</span>
+        <span className="sscc-field-label">{t.powerLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -54,7 +58,7 @@ export default function SampleSizeCCInput({ value, mode, onChange }: Props) {
       </div>
 
       <div className="sscc-field">
-        <span className="sscc-field-label">Ratio of controls to cases (r)</span>
+        <span className="sscc-field-label">{t.ratioLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -72,7 +76,7 @@ export default function SampleSizeCCInput({ value, mode, onChange }: Props) {
       </div>
 
       <div className="sscc-field">
-        <span className="sscc-field-label">Controls exposed, %</span>
+        <span className="sscc-field-label">{t.controlExposureLabel}</span>
         <input
           type="number"
           inputMode="decimal"
@@ -91,7 +95,7 @@ export default function SampleSizeCCInput({ value, mode, onChange }: Props) {
       </div>
 
       <div className="sscc-field">
-        <span className="sscc-field-label">Effect size, given as</span>
+        <span className="sscc-field-label">{t.effectSizeLabel}</span>
         <div className="sscc-toggle">
           <button
             type="button"
@@ -103,7 +107,7 @@ export default function SampleSizeCCInput({ value, mode, onChange }: Props) {
               )
             }
           >
-            Odds Ratio
+            {t.oddsRatioToggle}
           </button>
           <button
             type="button"
@@ -119,7 +123,7 @@ export default function SampleSizeCCInput({ value, mode, onChange }: Props) {
               )
             }
           >
-            % Cases Exposed
+            {t.caseExposureToggle}
           </button>
         </div>
 

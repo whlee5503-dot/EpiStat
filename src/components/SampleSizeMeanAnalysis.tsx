@@ -37,7 +37,7 @@ const SampleSizeMeanAnalysis: React.FC<Props> = ({ lang }) => {
       </h2>
 
       <div className="rxc-top">
-        <SampleSizeMeanInput value={input} onChange={setInput} />
+        <SampleSizeMeanInput value={input} onChange={setInput} lang={lang} />
 
         <div className="formula-box">
           <button

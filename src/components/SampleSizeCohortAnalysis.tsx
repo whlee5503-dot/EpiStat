@@ -52,7 +52,7 @@ const SampleSizeCohortAnalysis: React.FC<Props> = ({ lang }) => {
       </h2>
 
       <div className="rxc-top">
-        <SampleSizeCohortInput value={input} mode={mode} onChange={handleChange} />
+        <SampleSizeCohortInput value={input} mode={mode} onChange={handleChange} lang={lang} />
 
         <div className="formula-box">
           <button
