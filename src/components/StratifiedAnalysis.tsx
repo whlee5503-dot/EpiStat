@@ -323,6 +323,9 @@ const StratifiedAnalysis: React.FC<Props> = ({ lang }) => {
                 {showInterp && (
                   <div className="strat-interp-detail">
                     <div className="strat-footnote">{ts.interpDetail}</div>
+                    <div className="strat-footnote">
+                      {interp(ts.waldNote, { value: fmtNum(mhResult.waldOR.chiSquare, 4) })}
+                    </div>
                     <div className="strat-disclaimer">{t.common.disclaimer}</div>
                   </div>
                 )}

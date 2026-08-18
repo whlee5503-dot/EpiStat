@@ -76,6 +76,7 @@ export const translations = {
             midPExactPCol: 'Mid-P exact p',
             interpSummary: 'After adjusting for the stratification variable, the pooled odds ratio is {or} (95% CI: {lo}-{hi}).',
             interpDetail: 'The Mantel-Haenszel method combines stratum-specific estimates into a single pooled estimate, weighting each stratum by its precision. This controls for confounding by the stratification variable. The Breslow-Day test checks whether this pooling assumption (a single common OR or RR across strata) is reasonable; exact tests offer an alternative to the chi-square approximation when expected cell counts are small.',
+            waldNote: "OpenEpi's own calculator reports a slightly different value here ({value}) for the OR homogeneity test, because it uses a non-iterative Wald-type test rather than the true Breslow-Day statistic shown above -- both are legitimate ways of testing the same question.",
         },
         rxc: {
             title: 'R x C Table Analysis',
@@ -801,6 +802,7 @@ export const translations = {
             midPExactPCol: 'Mid-P 정확검정 p',
             interpSummary: '층화 변수를 보정한 결과, 통합 오즈비는 {or}입니다 (95% 신뢰구간: {lo}-{hi}).',
             interpDetail: 'Mantel-Haenszel 방법은 각 층의 정밀도에 따라 가중치를 부여하여 층별 추정치를 하나의 통합 추정치로 결합합니다. 이를 통해 층화 변수에 의한 교란을 통제합니다. Breslow-Day 검정은 이 통합 가정(전체 층에서 단일한 공통 OR 또는 RR)이 타당한지 확인하며, 기대 셀 도수가 작을 때는 정확검정이 카이제곱 근사법의 대안이 됩니다.',
+            waldNote: 'OpenEpi 자체 계산기는 OR 동질성 검정에서 이 값을 약간 다르게 ({value}) 보고하는데, 이는 위에 표시된 진짜 Breslow-Day 통계량이 아니라 반복계산이 없는 Wald 방식 검정을 사용하기 때문입니다 — 둘 다 같은 질문에 답하는 정당한 방법입니다.',
         },
         rxc: {
             title: 'R x C 표 분석',
@@ -1526,6 +1528,7 @@ export const translations = {
             midPExactPCol: 'p exact Mid-P',
             interpSummary: "Après ajustement pour la variable de stratification, le rapport de cotes combiné est de {or} (IC à 95 % : {lo}-{hi}).",
             interpDetail: "La méthode de Mantel-Haenszel combine les estimations spécifiques à chaque strate en une seule estimation groupée, en pondérant chaque strate selon sa précision. Cela permet de contrôler la confusion due à la variable de stratification. Le test de Breslow-Day vérifie si cette hypothèse de regroupement (un OR ou RR commun unique entre les strates) est raisonnable ; les tests exacts offrent une alternative à l'approximation du khi² lorsque les effectifs attendus sont faibles.",
+            waldNote: "Le calculateur d'OpenEpi lui-même rapporte une valeur légèrement différente ici ({value}) pour le test d'homogénéité de l'OR, car il utilise un test de type Wald non itératif plutôt que la véritable statistique de Breslow-Day indiquée ci-dessus -- les deux sont des façons légitimes de répondre à la même question.",
         },
         rxc: {
             title: 'Analyse de tableau R x C',
