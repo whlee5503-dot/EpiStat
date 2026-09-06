@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use EpiStat in your research or work, please cite it as below."
+title: "EpiStat: Free Epidemiology Statistics Calculator"
+type: software
+authors:
+  - family-names: "Lee"
+    given-names: "Won Ho"
+    orcid: "https://orcid.org/0009-0005-1866-8257"
+    affiliation: "PublicHealth Tech Lab"
+repository-code: "https://github.com/whlee5503-dot/EpiStat"
+url: "https://epistat.phtlab.org"
+license: MIT
+version: 1.0.1
+date-released: "2026-08-15"
+keywords:
+  - epidemiology
+  - biostatistics
+  - public health
+  - stratified analysis
+  - sample size
+  - digital public good
+  - open source
+abstract: >-
+  EpiStat is a free, mobile-friendly, open-source web application
+  reimplementing the core statistical modules of epidemiologic practice:
+  stratified analysis (Mantel-Haenszel adjusted odds/risk ratio,
+  Breslow-Day homogeneity test), R x C contingency tables, standardized
+  mortality ratios (seven significance test/CI methods), matched
+  case-control studies (McNemar's test), dose-response trend testing, WHO
+  Child Growth Standards z-scores, person-time analysis, and sample
+  size/power calculations across 9 study-design subtypes. Every module is
+  independently validated against OpenEpi, documented in VALIDATION.md.
+  The app runs entirely client-side as an installable, offline-capable
+  Progressive Web App, with no data collection.
