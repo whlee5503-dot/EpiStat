@@ -28,6 +28,11 @@ export const translations = {
             note: 'Note',
             undefined: 'undefined',
             disclaimer: 'This tool is for epidemiological and educational purposes. It does not replace professional statistical consultation for publication-grade analyses.',
+            footer: {
+                siblingsHeading: 'Part of the PHT Lab family',
+                hub: 'phtlab.org',
+                orcid: 'ORCID',
+            },
         },
         errorBoundary: {
             title: 'Something went wrong',
@@ -754,6 +759,11 @@ export const translations = {
             note: '참고',
             undefined: '정의 불가',
             disclaimer: '이 도구는 역학 연구 및 교육 목적으로 제공됩니다. 논문 등 출판용 분석을 위한 전문 통계 상담을 대체하지 않습니다.',
+            footer: {
+                siblingsHeading: 'PHT Lab 앱 패밀리',
+                hub: 'phtlab.org',
+                orcid: 'ORCID',
+            },
         },
         errorBoundary: {
             title: '문제가 발생했습니다',
@@ -1480,6 +1490,11 @@ export const translations = {
             note: 'Remarque',
             undefined: 'indéfini',
             disclaimer: "Cet outil est destiné à des fins épidémiologiques et éducatives. Il ne remplace pas une consultation statistique professionnelle pour des analyses destinées à publication.",
+            footer: {
+                siblingsHeading: 'Fait partie de la famille PHT Lab',
+                hub: 'phtlab.org',
+                orcid: 'ORCID',
+            },
         },
         errorBoundary: {
             title: "Une erreur s'est produite",

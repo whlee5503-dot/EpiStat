@@ -2,6 +2,7 @@
 import { translations } from './i18n/translations';
 import type { Lang } from './i18n/translations';
 import ErrorBoundary from './components/ErrorBoundary';
+import Footer from './components/Footer';
 import './App.css';
 
 const StratifiedAnalysis = lazy(() => import('./components/StratifiedAnalysis'));
@@ -118,6 +119,16 @@ function App() {
           {activeModule === 'samplesizepower' && <SampleSizePowerAnalysis lang={lang} />}
         </Suspense>
       </ErrorBoundary>
+
+      <Footer
+        currentAppId="epistat"
+        disclaimer={t.common.disclaimer}
+        labels={{
+          siblingsHeading: t.common.footer.siblingsHeading,
+          hub: t.common.footer.hub,
+          orcid: t.common.footer.orcid,
+        }}
+      />
     </div>
   );
 }

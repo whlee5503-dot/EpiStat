@@ -1,0 +1,82 @@
+/* Shared Footer component (app-footer-*)
+ * Used across all six sibling apps (EpiCalc, EpiStat, EpiPlus,
+ * EpiLog, EpiAid, VaxGuard) via src/components/Footer.tsx.
+ */
+.app-footer {
+    margin-top: var(--space-8);
+    padding: var(--space-6);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.app-footer-siblings {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
+}
+
+.app-footer-siblings-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+}
+
+.app-footer-sibling-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.app-footer-sibling-link {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.app-footer-sibling-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.app-footer-sibling-current {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.app-footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.app-footer-hub-link,
+.app-footer-orcid-link {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.app-footer-hub-link:hover,
+.app-footer-orcid-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.app-footer-sep {
+    color: var(--border-color);
+}
+
+.app-footer-disclaimer {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.4;
+}

@@ -113,6 +113,11 @@ side (browser/device). No data is sent to any external server, and no
 login is required. Safe for use in sensitive public health field
 contexts.
 
+Because no user data is collected or stored anywhere — locally or
+remotely — there is no user-generated data to export or extract; the
+DPG Standard's data-extraction-mechanism indicator does not apply to
+EpiStat.
+
 ---
 
 ## ⚡ Offline Support
